@@ -174,6 +174,8 @@ public class PresentExtension
 
     synchronized (content.renderLock) {
       Mode mode;
+      content.setPresentedSourceSize(
+          pixmap.drawable.getPresentedSourceWidth(), pixmap.drawable.getPresentedSourceHeight());
       if (canDirectScanout(content, pixmap.drawable, p.xOff, p.yOff)) {
         releasePendingScanout(window);
         content.setScanoutSource(pixmap.drawable, p.xOff, p.yOff);
