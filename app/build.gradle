@@ -233,14 +233,7 @@ dependencies {
     implementation libs.workRuntimeKtx
 }
 configurations.all {
-    resolutionStrategy {
-        eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'com.squareup.okhttp3' && details.requested.name == 'okhttp-android') {
-                details.useVersion '4.12.0'
-                details.because 'Fix CheckAarMetadata compileSdk 35 constraint'
-            }
-        }
-    }
+    exclude group: 'com.squareup.okhttp3', module: 'okhttp-android'
 }
 
 spotless {
