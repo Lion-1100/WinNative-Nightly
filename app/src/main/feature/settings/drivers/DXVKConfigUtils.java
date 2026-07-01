@@ -23,25 +23,21 @@ public final class DXVKConfigUtils {
     }
 
     public static void setEnvVars(Context context, KeyValueSet config, EnvVars envVars, int refreshRateOverride) {
-        String content = "";
+        String content = "dxvk.useEarlyDiscard = True; dxvk.gplAsyncCache = True; ";
 
         if (refreshRateOverride > 0) {
             String rateStr = String.valueOf(refreshRateOverride);
             content += "dxgi.syncInterval = 0; ";
             content += "dxgi.maxFrameRate = " + rateStr + "; ";
-            content += "d3d9.maxFrameRate = " + rateStr;
+            content += "d3d9.maxFrameRate = " + rateStr + "; ";
             envVars.put("DXVK_FRAME_RATE", rateStr);
         }
 
-        String async = config.get("async");
-        if (!async.isEmpty() && !async.equals("0")) {
-            envVars.put("DXVK_ASYNC", "1");
-        }
-
-        String asyncCache = config.get("asyncCache");
-        if (!asyncCache.isEmpty() && !asyncCache.equals("0")) {
-            envVars.put("DXVK_GPLASYNCCACHE", "1");
-        }
+        envVars.put("DXVK_ASYNC", "1");
+        envVars.put("DXVK_GPLASYNCCACHE", "1");
+        envVars.put("DXVK_NUM_COMPILER_THREADS", "6");
+        envVars.put("vblank_mode", "0");
+        envVars.put("MESA_VK_WSI_PRESENT_MODE", "immediate");
 
         if (!content.isEmpty()) {
             envVars.put("DXVK_CONFIG", content);
